@@ -1,5 +1,6 @@
 from collections import defaultdict
 import re
+import os
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 import pandas as pd
@@ -91,11 +92,9 @@ def df_to_excel_schedule(df, judul):
     
     for i in range(len(starts_d)):
         ws.merge_cells(start_row=starts_d[i], start_column=3, end_row=stops_d[i], end_column=3)
-    
-    # with NamedTemporaryFile() as tmp:
-    #     wb.save(tmp.name)
-    #     tmp.seek(0)
-    #     stream = tmp.read()
-    
-    # return stream
+
+    try:
+        os.remove(f'{judul}.xlsx')
+    except:
+        pass
     wb.save(f'{judul}.xlsx')
