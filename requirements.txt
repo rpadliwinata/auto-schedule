@@ -1,3 +1,6 @@
 fastapi
 pandas
 python-dateutil
+aiofiles
+python-multipart
+openpyxl

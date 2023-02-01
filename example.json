@@ -1,0 +1,60 @@
+[
+    {
+        "hari": "SENIN",
+        "jam": "06:30 - 09:30",
+        "ruangan": "0604",
+        "matkul": "SISTER",
+        "kelas": "IF-44-12",
+        "dosen": "SKH",
+        "asprak": [
+            "Naufal Rafi Adiansyah",
+            "Azriel Farasfauzan Sepvira",
+            "ASLAB (HIRO)",
+            "ASLAB (CACA)",
+            "Nia Madu Marliana"
+        ]
+    },
+    {
+        "hari": "SENIN",
+        "jam": "06:30 - 09:30",
+        "ruangan": "0605",
+        "matkul": "WEBPRO",
+        "kelas": "IT-44-03",
+        "dosen": "GGM",
+        "asprak": [
+            "Naufal Rafi Adiansyah",
+            "Azriel Farasfauzan Sepvira",
+            "ASLAB (HIRO)",
+            "ASLAB (CACA)",
+            "Nia Madu Marliana"
+        ]
+    },
+    {
+        "hari": "SENIN",
+        "jam": "09:30 - 12:30",
+        "ruangan": "0604",
+        "matkul": "SISTER",
+        "kelas": "IF-44-INT",
+        "dosen": "SKH",
+        "asprak": [
+            "Rifki Adi Pramana",
+            "Bang Rizal",
+            "ASLAB (BUNGA)"
+        ]
+    },
+    {
+        "hari": "SENIN",
+        "jam": "06:30 - 09:30",
+        "ruangan": "0604",
+        "matkul": "STD",
+        "kelas": "IF-45-12",
+        "dosen": "URZ",
+        "asprak": [
+            "Filza Rahma Muflihah",
+            "Firman Panji Utama",
+            "Karuna Dewa Satyananda",
+            "Quin Derbi Kusuma",
+            "Talitha Nabila"
+        ]
+    }
+]

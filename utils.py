@@ -4,7 +4,11 @@ import os
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 import pandas as pd
-from tempfile import NamedTemporaryFile
+import random
+from deta import Deta
+
+deta = Deta("c09hsnq1_tDcQgDiYGUxUNqFJpMtriV33FU1o1uE5")
+drive = deta.Drive('asprak')
 
 def clean_df(raw_df):
     df = raw_df.copy()
@@ -98,3 +102,56 @@ def df_to_excel_schedule(df, judul):
     except:
         pass
     wb.save(f'{judul}.xlsx')
+
+def df_to_empty(raw_df):
+    df = raw_df.copy()
+    jadwal = list(filter(lambda x: x.startswith('JADWAL'), df.columns))
+    final_res = defaultdict(lambda: defaultdict(lambda: []))
+    for x in jadwal:
+        matkul, hari, jam = re.findall('JAGA\s+(\S+)\s+\[(\S+)\s+(\d{2}[:.]\d{2}\s+-\s+\d{2}[:.]\d{2})', x)[0]
+        jam = jam.replace('.', ':')
+        hari = 'SELASA' if hari == 'SELESA' else hari
+        data = {
+            'ruangan': None,
+            'matkul': matkul,
+            'kelas': None,
+            'dosen': None,
+            'asprak': []
+        }
+        final_res[hari][jam].append(data)
+    return final_res
+
+def assign(raw_df):
+    df = raw_df.copy()
+    raw_empty = df_to_empty(df)
+    raw_schedule = df_to_schedule(df)
+    for asprak, value in raw_schedule.items():
+        matkul_asprak = value['matkul']
+        for hari, praktikum in raw_empty.items():
+            jam = praktikum.keys()
+            for x in jam:
+                for single in praktikum[x]:
+                    if single['matkul'] in matkul_asprak and len(single['asprak']) < 6 and value['appearance'] < 5:
+                        try:
+                            if not value['jadwal'][hari][x]:
+                                value['jadwal'][hari][x] = single['matkul']
+                                single['asprak'].append(asprak)
+                                value['appearance'] += 1
+                        except:
+                            pass
+    return raw_empty
+
+def to_api(empty_jadwal):
+    final = []
+    for hari, value in empty_jadwal.items():
+        for jam, isi in value.items():
+            ruang = ['0604', '0605', '0617', '0618', '0704', '0705', '0717', '0718']
+            random.shuffle(ruang)
+            for jadwal in isi:
+                jadwal['hari'] = hari
+                jadwal['jam'] = jam
+                jadwal['ruangan'] = ruang.pop()
+                jadwal['dosen'] = 'NA'
+                jadwal['kelas'] = 'NA'
+                final.append(jadwal)
+    return final
